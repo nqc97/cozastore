@@ -9,6 +9,7 @@ import com.cybersoft.cozastore.payload.response.ProductResponse;
 import com.cybersoft.cozastore.repository.ProductRepository;
 import com.cybersoft.cozastore.service.imp.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,8 +20,11 @@ public class ProductService implements IProductService {
     @Autowired
     private ProductRepository productRepository;
 
+//    @Value("${host.name}")
+//    private String hostName;
+
     @Override
-    public List<ProductResponse> getProductByCategoryId(int id){
+    public List<ProductResponse> getProductByCategoryId( String hostName, int id){
 
         List<ProductEntity> list = productRepository.findByCategoryId(id);
         List<ProductResponse> productResponseList = new ArrayList<>();
@@ -28,7 +32,7 @@ public class ProductService implements IProductService {
         for (ProductEntity data : list){
             ProductResponse productResponse = new ProductResponse();
             productResponse.setName(data.getName());
-            productResponse.setImage(data.getImage());
+            productResponse.setImage("http://" + hostName + "/product/file/" + data.getImage());
             productResponse.setPrice(data.getPrice());
             productResponseList.add(productResponse);
         }
