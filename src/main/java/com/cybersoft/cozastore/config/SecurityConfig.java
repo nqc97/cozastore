@@ -51,6 +51,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
 //                   Quy định chứng thực cho link chỉ định
                 .antMatchers("/login/**").permitAll()
+                .antMatchers("/product/file/**").permitAll()
 
 //                   Tất cả các link còn lại đều phải chứng thực
                 .anyRequest().authenticated()
