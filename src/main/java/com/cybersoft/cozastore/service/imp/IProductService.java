@@ -12,4 +12,6 @@ public interface IProductService {
 
      boolean addProduct(ProductResquest productResquest);
 
+     ProductResponse getDetailProduct(int id);
+
 }
