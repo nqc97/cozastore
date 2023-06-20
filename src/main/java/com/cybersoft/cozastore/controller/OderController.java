@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/order")
 public class OderController {
@@ -18,9 +20,9 @@ public class OderController {
     private IOrderService iOrderService;
 
     @PostMapping("")
-    public ResponseEntity<?> addOrder(@RequestBody OrderRequest orderRequest){
+    public ResponseEntity<?> addOrder(HttpServletRequest request, @RequestBody OrderRequest orderRequest){
 
-        iOrderService.addOrder(orderRequest);
+        iOrderService.addOrder(request, orderRequest);
 
         return new ResponseEntity<>("", HttpStatus.OK);
     }
