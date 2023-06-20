@@ -10,6 +10,8 @@ import com.cybersoft.cozastore.repository.ProductRepository;
 import com.cybersoft.cozastore.service.imp.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -45,10 +47,17 @@ public class ProductService implements IProductService {
         return  productResponse;
     }
 
-//    @Value("${host.name}")
+    @Override
+    @CacheEvict(value = "getProductByCategory", allEntries = true)
+    public boolean clearCache() {
+        return true;
+    }
+
+    //    @Value("${host.name}")
 //    private String hostName;
 
     @Override
+    @Cacheable("getProductByCategory")
     public List<ProductResponse> getProductByCategoryId( String hostName, int id){
 
         List<ProductEntity> list = productRepository.findByCategoryId(id);
